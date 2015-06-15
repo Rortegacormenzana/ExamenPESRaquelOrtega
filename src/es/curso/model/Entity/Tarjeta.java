@@ -9,7 +9,7 @@ public class Tarjeta {
 	private String tipo;
 	private int numComprobacion;
 	private String contrasenha;
-	private boolean bloqueada; 
+	private String bloqueada; 
 	
 	
 	public Tarjeta() {
@@ -17,19 +17,20 @@ public class Tarjeta {
 	}
 	public Tarjeta (int id, String numero, int cupoMaximo, 
 			int saldoDisponible, String tipo, int numComprobacion, 
-			String contrasenha, Boolean bloqueada) {
+			String contrasenha, String bloqueada) {
 		super();
 		this.id = id;
 		this.numero = numero;
 		this.cupoMaximo = cupoMaximo;
 		this.saldoDisponible = saldoDisponible;
+		this.tipo = tipo;
 		this.numComprobacion = numComprobacion;
 		this.contrasenha = contrasenha;
 		this.bloqueada = bloqueada;
 	}
 
 // getters setters 	
-	
+
 	public int getId() {
 		return id;
 	}
@@ -72,24 +73,26 @@ public class Tarjeta {
 	public void setContrasenha(String contrasenha) {
 		this.contrasenha = contrasenha;
 	}
-	public boolean isBloqueada() {
+	public String getBloqueada() {
 		return bloqueada;
 	}
-	public void setBloqueada(boolean bloqueada) {
+	public void setBloqueada(String bloqueada) {
 		this.bloqueada = bloqueada;
 	}
+
 	
 	
 	// metodo generate to string
 	@Override
 	public String toString() {
 		return "Tarjeta [id=" + id + ", numero=" + numero + ", cupoMaximo="
-				+ cupoMaximo + ", saldoDisponible=" + saldoDisponible + ", tipo="
-				+ tipo + ", numComprobacion=" + numComprobacion
+				+ cupoMaximo + ", saldoDisponible=" + saldoDisponible
+				+ ", tipo=" + tipo + ", numComprobacion=" + numComprobacion
 				+ ", contrasenha=" + contrasenha + ", bloqueada=" + bloqueada
 				+ "]";
 	}
 	
+
 	
 	
 	// hash and equals
@@ -97,14 +100,15 @@ public class Tarjeta {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (bloqueada ? 1231 : 1237);
+		result = prime * result
+				+ ((bloqueada == null) ? 0 : bloqueada.hashCode());
 		result = prime * result
 				+ ((contrasenha == null) ? 0 : contrasenha.hashCode());
-		result = prime * result + saldoDisponible;
 		result = prime * result + cupoMaximo;
 		result = prime * result + id;
 		result = prime * result + numComprobacion;
 		result = prime * result + ((numero == null) ? 0 : numero.hashCode());
+		result = prime * result + saldoDisponible;
 		result = prime * result + ((tipo == null) ? 0 : tipo.hashCode());
 		return result;
 	}
@@ -118,14 +122,15 @@ public class Tarjeta {
 		if (getClass() != obj.getClass())
 			return false;
 		Tarjeta other = (Tarjeta) obj;
-		if (bloqueada != other.bloqueada)
+		if (bloqueada == null) {
+			if (other.bloqueada != null)
+				return false;
+		} else if (!bloqueada.equals(other.bloqueada))
 			return false;
 		if (contrasenha == null) {
 			if (other.contrasenha != null)
 				return false;
 		} else if (!contrasenha.equals(other.contrasenha))
-			return false;
-		if (saldoDisponible != other.saldoDisponible)
 			return false;
 		if (cupoMaximo != other.cupoMaximo)
 			return false;
@@ -138,6 +143,8 @@ public class Tarjeta {
 				return false;
 		} else if (!numero.equals(other.numero))
 			return false;
+		if (saldoDisponible != other.saldoDisponible)
+			return false;
 		if (tipo == null) {
 			if (other.tipo != null)
 				return false;
@@ -145,6 +152,7 @@ public class Tarjeta {
 			return false;
 		return true;
 	}
+	
 	
 	
 	

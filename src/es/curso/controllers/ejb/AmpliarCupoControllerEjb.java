@@ -1,5 +1,5 @@
 package es.curso.controllers.ejb;
 
-public class AmpliarCupoControllerEjb {
-	
+public abstract class AmpliarCupoControllerEjb {
+	public abstract void ampliarCupo();
 }

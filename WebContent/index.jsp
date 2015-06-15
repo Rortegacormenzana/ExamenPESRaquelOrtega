@@ -6,5 +6,16 @@
 <%@ include file="template/header.jsp" %>
 <h1>BANCO TEROBAN</h1>
 
+
+
+
+
+
+
+
+
+
+
+
 <!--  footer.jsp -->
 <%@ include file="template/footer.jsp" %>

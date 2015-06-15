@@ -12,7 +12,10 @@
     <nav>
     <ul>
         <li><a href="${pageContext.request.contextPath}/Banco/altaTarjeta">Alta Tarjeta</a></li>
-        <li><a href="${pageContext.request.contextPath}/Banco/listarTodos">Listar todos</a></li>
+        <li><a href="${pageContext.request.contextPath}/Banco/enviarPago">Enviar pago online</a></li>
+        <li><a href="${pageContext.request.contextPath}/Banco/bloquearTarjeta">Bloquear tarjeta bancaria</a></li>
+        <li><a href="${pageContext.request.contextPath}/Banco/ampliarCupo">Ampliar cupo en cajero</a></li>
+        <li><a href="${pageContext.request.contextPath}/Banco/listarTodos">Ver listado de tarjetas</a></li>
      
     </ul>
     </nav>

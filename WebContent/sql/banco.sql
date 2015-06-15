@@ -26,12 +26,17 @@ CREATE TABLE IF NOT EXISTS `tarjetacredito` (
   `tipo` char(10) NOT NULL,
   `numComprobacion` int(7) NOT NULL,
   `contrasenha` char(4) NOT NULL,
-  `bloqueada` binary(50) NOT NULL,
+  `bloqueada` char(2) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
--- Volcando datos para la tabla banco.tarjetacredito: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla banco.tarjetacredito: ~4 rows (aproximadamente)
 /*!40000 ALTER TABLE `tarjetacredito` DISABLE KEYS */;
+INSERT INTO `tarjetacredito` (`id`, `numero`, `cupoMaximo`, `saldoDisponible`, `tipo`, `numComprobacion`, `contrasenha`, `bloqueada`) VALUES
+	(1, '452345234', 555, 242345234, 'visa', 23412, '4345', 'no'),
+	(2, '123456789012', 200, 400000, 'visa', 1234, '2344', 'no'),
+	(3, '123456789012', 200, 400000, 'visa', 1234, '2344', 'no'),
+	(4, '123456789012', 300, 30000, 'visa', 1234, '1234', 'no');
 /*!40000 ALTER TABLE `tarjetacredito` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;

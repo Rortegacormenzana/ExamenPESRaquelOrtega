@@ -37,7 +37,128 @@ public class TarjetaDaoJdbc implements TarjetaDao{
 				ps.setString(5, tarjeta.getTipo()); 
 				ps.setInt(6, tarjeta.getNumComprobacion());
 				ps.setString(7, tarjeta.getContrasenha()); 
-				ps.setBoolean(8, tarjeta.isBloqueada()); 
+				ps.setString(8, tarjeta.getBloqueada()); 
+				System.out.println("El valor de id es: " + tarjeta.getId());
+				System.out.println("El valor de numero tarjeta es: " + tarjeta.getNumero());
+				System.out.println("El valor de cupo maximo es: " + tarjeta.getCupoMaximo());
+				System.out.println("El valor de saldo disponible es: " + tarjeta.getSaldoDisponible());
+				System.out.println("El valor de tipo es: " + tarjeta.getTipo());
+				System.out.println("El valor de numero comprobacion es: " + tarjeta.getNumComprobacion());
+				System.out.println("El valor de contraseña es: " + tarjeta.getContrasenha());
+				System.out.println("El valor de bloqueada es: " + tarjeta.getBloqueada());
+				
+			// 3. ejecutar la sentencia (sql) 
+				ps.executeUpdate(); // = dar al play en Heidi
+				// nota: se usa executeUpdate() para las instrucciones sql 
+				// como: insert delete update
+				// Esta instruccion devuelve como resultado el numero de registros
+				// (o filas) afectadas
+				
+				//3.1 Hacer Commit
+				cx.commit();
+				
+			
+			
+		} catch (SQLException e) {	
+			try {
+				cx.rollback();
+			} catch (Exception e1) {
+				
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		}
+		
+		
+		finally{
+		// 4. cerrar la conexion
+		cerrarConexion();
+		}
+	}
+
+
+	private void abrirConexion(){
+		// 1. determinar y validar si tengo el driver o conector (de mysql)
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		// 2. establecer conexion	
+			cx= DriverManager.getConnection(
+					"jdbc:mysql://localhost:3306/banco", // localizacion de base de datos
+					"root", // usuario
+					"root" // contraseña
+					);
+		// 3. Iniciar el autoCommit en false
+			cx.setAutoCommit(false);
+		} catch (ClassNotFoundException e) {
+			
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void cerrarConexion(){
+		try {
+			if(cx!=null)
+			cx.close();
+		} catch (SQLException e) {			
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	public void ampliarCupo (Tarjeta tarjeta) {
+		try {
+			//instrucciones para conectar con la base de datos
+			// 1. abrir conexion
+			abrirConexion();
+			
+			// 2. preparar la sentencia (sql) para agregar
+			PreparedStatement ps= 
+				cx.prepareStatement	("UPDATE tarjetacredito SET cupoMaximo=? WHERE numero=?");
+				// 2.1 Insertar los datos de cliente en los ?
+				
+				
+			// 3. ejecutar la sentencia (sql) 
+				ps.executeUpdate(); // = dar al play en Heidi
+				// nota: se usa executeUpdate() para las instrucciones sql 
+				// como: insert delete update
+				// Esta instruccion devuelve como resultado el numero de registros
+				// (o filas) afectadas
+				
+				//3.1 Hacer Commit
+				cx.commit();
+				
+			
+			
+		} catch (SQLException e) {	
+			try {
+				cx.rollback();
+			} catch (Exception e1) {
+				
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		}
+		
+		
+		finally{
+		// 4. cerrar la conexion
+		cerrarConexion();
+		}
+	}
+	
+	public void bloquearTarjeta (Tarjeta tarjeta) {
+		try {
+			//instrucciones para conectar con la base de datos
+			// 1. abrir conexion
+			abrirConexion();
+			
+			// 2. preparar la sentencia (sql) para agregar
+			PreparedStatement ps= 
+				cx.prepareStatement	("UPDATE tarjetacredito SET bloqueada=? WHERE numero=?");
+				// 2.1 Insertar los datos de cliente en los ?
 				
 				
 			// 3. ejecutar la sentencia (sql) 
@@ -93,11 +214,10 @@ public class TarjetaDaoJdbc implements TarjetaDao{
 				tarjetaTemporal.setTipo(consulta.getString("tipo"));
 				tarjetaTemporal.setNumComprobacion(consulta.getInt("numComprobacion"));
 				tarjetaTemporal.setContrasenha(consulta.getString("contrasenha"));
-				tarjetaTemporal.setBloqueada(consulta.getBoolean("bloqueada"));
-				
+				tarjetaTemporal.setBloqueada(consulta.getString("bloqueada"));
+								
 				tarjetas.add(tarjetaTemporal);
-			}
-			
+			}			
 				
 		} catch (SQLException e) {
 			
@@ -111,37 +231,17 @@ public class TarjetaDaoJdbc implements TarjetaDao{
 		}
 	}
 
-	private void abrirConexion(){
-		// 1. determinar y validar si tengo el driver o conector (de mysql)
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-		// 2. establecer conexion	
-			cx= DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/banco", // localizacion de base de datos
-					"root", // usuario
-					"root" // contraseña
-					);
-		// 3. Iniciar el autoCommit en false
-			cx.setAutoCommit(false);
-		} catch (ClassNotFoundException e) {
-			
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	private void cerrarConexion(){
-		try {
-			if(cx!=null)
-			cx.close();
-		} catch (SQLException e) {			
-			e.printStackTrace();
-		}
+	@Override
+	public void update(Tarjeta tarjeta) {
+		// TODO Auto-generated method stub
 		
 	}
 
-	
+	@Override
+	public void delete(int id) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 
 	

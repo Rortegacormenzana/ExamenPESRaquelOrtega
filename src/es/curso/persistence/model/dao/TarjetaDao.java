@@ -10,6 +10,14 @@ public interface TarjetaDao {
 	
 	public ArrayList<Tarjeta> findAll();
 	
+	public void ampliarCupo (Tarjeta tarjeta);
+	
+	public void bloquearTarjeta (Tarjeta tarjeta);
+
+	public void update(Tarjeta tarjeta);
+
+	public void delete(int id);
+	
 	
 	
 
