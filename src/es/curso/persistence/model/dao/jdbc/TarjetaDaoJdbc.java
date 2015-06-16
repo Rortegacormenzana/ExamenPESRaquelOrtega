@@ -71,7 +71,7 @@ public class TarjetaDaoJdbc implements TarjetaDao{
 		
 		
 		finally{
-		// 4. cerrar la conexion
+		// 4. cerrar la conexion		
 		cerrarConexion();
 		}
 	}
@@ -118,7 +118,8 @@ public class TarjetaDaoJdbc implements TarjetaDao{
 			PreparedStatement ps= 
 				cx.prepareStatement	("UPDATE tarjetacredito SET cupoMaximo=? WHERE numero=?");
 				// 2.1 Insertar los datos de cliente en los ?
-				
+				ps.setInt(1, tarjeta.getCupoMaximo()); 
+				ps.setString(2, tarjeta.getNumero());
 				
 			// 3. ejecutar la sentencia (sql) 
 				ps.executeUpdate(); // = dar al play en Heidi
@@ -159,7 +160,8 @@ public class TarjetaDaoJdbc implements TarjetaDao{
 			PreparedStatement ps= 
 				cx.prepareStatement	("UPDATE tarjetacredito SET bloqueada=? WHERE numero=?");
 				// 2.1 Insertar los datos de cliente en los ?
-				
+				ps.setString(1, tarjeta.getBloqueada()); 
+				ps.setString(2, tarjeta.getNumero());
 				
 			// 3. ejecutar la sentencia (sql) 
 				ps.executeUpdate(); // = dar al play en Heidi
@@ -170,7 +172,6 @@ public class TarjetaDaoJdbc implements TarjetaDao{
 				
 				//3.1 Hacer Commit
 				cx.commit();
-				
 			
 			
 		} catch (SQLException e) {	
@@ -190,6 +191,48 @@ public class TarjetaDaoJdbc implements TarjetaDao{
 		}
 	}
 
+	public void enviarPago (Tarjeta tarjeta) {
+		try {
+			//instrucciones para conectar con la base de datos
+			// 1. abrir conexion
+			abrirConexion();
+			
+			// 2. preparar la sentencia (sql) para agregar
+			PreparedStatement ps= 
+				cx.prepareStatement	("UPDATE tarjetacredito SET saldoDisponible= saldoDisponible -? WHERE numero=?");
+				// 2.1 Insertar los datos de cliente en los ?
+				ps.setInt(1, tarjeta.getSaldoDisponible()); 
+				ps.setString(2, tarjeta.getNumero());
+				
+			// 3. ejecutar la sentencia (sql) 
+				ps.executeUpdate(); // = dar al play en Heidi
+				// nota: se usa executeUpdate() para las instrucciones sql 
+				// como: insert delete update
+				// Esta instruccion devuelve como resultado el numero de registros
+				// (o filas) afectadas
+				
+				//3.1 Hacer Commit
+				cx.commit();
+			
+			
+		} catch (SQLException e) {	
+			try {
+				cx.rollback();
+			} catch (Exception e1) {
+				
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		}
+		
+		
+		finally{
+		// 4. cerrar la conexion
+		cerrarConexion();
+		}
+	}
+	
+	
 	@Override
 	public ArrayList<Tarjeta> findAll() {	
 		ArrayList<Tarjeta> tarjetas = new ArrayList<Tarjeta>();
