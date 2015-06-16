@@ -15,6 +15,8 @@ public interface TarjetaDao {
 	public void bloquearTarjeta (Tarjeta tarjeta);
 
 	public void update(Tarjeta tarjeta);
+	
+	public void enviarPago (Tarjeta tarjeta);
 
 	public void delete(int id);
 	
